@@ -27,7 +27,7 @@ st.markdown('---')
 col1 , col2, col3 = st.columns(3)
 with col1:
     st.markdown('#### Tabelas')
-    str.write('Explore os dados brutos e estatísticas resumidas dos clientes da Telco')
+    st.write('Explore os dados brutos e estatísticas resumidas dos clientes da Telco')
 with col2:
     st.markdown('#### Gráficos')
     st.write('Visualize os principais indicadores de churn de forma interativa')
@@ -40,13 +40,13 @@ st.markdown('#### Sobre o projeto')
 
 st.write(
     '''
-    Dashboard desenvolvido para trabalho de pós graduação da YTO Academy pela matéria "DataViz com Python".
+    Dashboard desenvolvido para trabalho de pós graduação da YTO Academy pela matéria "DataViz com Python".\n
     Possuindo como objetivo analisar um dataset em csv para identificar padrões de cancelamento, compreender 
-    os motivos que levam os clientes a deixar a empresa e gerar insights acionáveis para reduzir a taxa de churn
+    os motivos que levam os clientes a deixar a empresa e gerar insights acionáveis para reduzir a taxa de churn.
 
-    ** Dataset: ** IBM Telco Customer Churn
-    ** Total de clientes: ** 7.043
-    ** Colunas analisadas: ** 50 atributos por cliente
+    **Dataset:** IBM Telco Customer Churn  \n
+    **Total de clientes:** 7.043 \n
+    **Colunas analisadas:** 50 atributos por cliente
 
     '''
 )
