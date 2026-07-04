@@ -1,11 +1,10 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title='Trabalho pós'
+    page_title='Home'
     ,page_icon=':robot:'
     ,layout='wide'
 )
-
 st.sidebar.title("Navegação")
 nome = st.sidebar.text_input("Seu nome:",placeholder="Digite seu nome aqui")
 if nome:
