@@ -59,7 +59,7 @@ tempo_medio_permanencia = df_filtrado['Tenure in Months'].mean()
 vlr_medio_mensalidade = df_filtrado['Monthly Charge'].mean()
 
 indicador1.metric('Total de Clientes', f'{total:,}')
-indicador2.metric('Clientes com Churn',f'{churn:,}',delta=f'{churn / total * 100:1.f}%' if total else '0%')
+indicador2.metric('Clientes com Churn',f'{churn:,}',delta=f'{churn / total * 100:.1f}%' if total else '0%')
 indicador3.metric('Tempo Médio (meses) até cancelamento',f'{tempo_medio_permanencia:.1f}')
 indicador4.metric('Mensalidade Média',f'R$ {vlr_medio_mensalidade:.2f}')
 
@@ -73,17 +73,26 @@ colunas_exibir = st.multiselect(
     default=['Customer ID','Gender','Age','Contract','Tenure in Months','Monthly Charge'
              ,'Internet Type','Churn Label','Churn Category','Churn Reason']
 )
-if colunas_exibir:
-    st.table(df_filtrado[colunas_exibir].head(50))
-else:
-    st.warning('Selecione ao menos uma coluna.')
+# if colunas_exibir:
+#     st.table(df_filtrado[colunas_exibir].head(50))
+# else:
+#     st.warning('Selecione ao menos uma coluna.')
 
-st.caption(f'Exibindo até 50 de {total} registros filtrados.')
+# st.caption(f'Exibindo até 50 de {total} registros filtrados.')
+if colunas_exibir:
+    st.dataframe(
+        df_filtrado[colunas_exibir]
+        ,height=500
+        ,width='stretch'
+    )
+else:
+    st.warning('Selecione ao menos uma coluna')
+st.caption(f'Total de {len(df_filtrado)} registros filtrados (use scroll para navegar).')
 
 st.markdown('---')
 
 #Distribuição de churn por categoria
-st.subheader('Churn por categoria de motivo')
+st.subheader('Churn x Categoria')
 churn_cat = (
     df_filtrado[df_filtrado['Churn Label'] == 'Yes']
     .groupby('Churn Category')
@@ -92,7 +101,7 @@ churn_cat = (
     .sort_values('Quantidade',ascending=False)
 )
 
-st.table(churn_cat)
+st.dataframe(churn_cat,hide_index=True)
 
 #top motivos de churn
 st.subheader('Top 10 Motivos de Churn')
@@ -105,4 +114,4 @@ top_motivos = (
     .head(10)
 )
 
-st.table(top_motivos)
+st.dataframe(top_motivos,hide_index=True)
