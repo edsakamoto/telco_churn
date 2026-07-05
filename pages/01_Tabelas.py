@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from func.carregar_dados import carregar_dados_csv 
 
 st.set_page_config(page_title='Tabelas - Telco Churn', layout='wide')
 
@@ -13,12 +14,7 @@ st.title('Tabela de dados')
 st.markdown('Explore os dados dos clientes da Telco de forma estática e resumida.')
 st.markdown('---')
 
-@st.cache_data
-def carregar_dados():
-    df = pd.read_csv('telco.csv')
-    return df
-
-df = carregar_dados()
+df = carregar_dados_csv()
 
 #Filtros
 st.subheader('Filtros')
@@ -49,22 +45,6 @@ if filtro_internet:
 
 st.markdown('---')
 
-#indicadores
-st.subheader('Indicadores Gerais')
-
-indicador1, indicador2, indicador3, indicador4 = st.columns(4)
-total = len(df_filtrado)
-churn = df_filtrado[df_filtrado['Churn Label'] == 'Yes'].shape[0]
-tempo_medio_permanencia = df_filtrado['Tenure in Months'].mean()
-vlr_medio_mensalidade = df_filtrado['Monthly Charge'].mean()
-
-indicador1.metric('Total de Clientes', f'{total:,}')
-indicador2.metric('Clientes com Churn',f'{churn:,}',delta=f'{churn / total * 100:.1f}%' if total else '0%')
-indicador3.metric('Tempo Médio (meses) até cancelamento',f'{tempo_medio_permanencia:.1f}')
-indicador4.metric('Mensalidade Média',f'R$ {vlr_medio_mensalidade:.2f}')
-
-st.markdown('---')
-
 #tabela de dados completa
 st.subheader('Dados completos')
 colunas_exibir = st.multiselect(
@@ -73,10 +53,6 @@ colunas_exibir = st.multiselect(
     default=['Customer ID','Gender','Age','Contract','Tenure in Months','Monthly Charge'
              ,'Internet Type','Churn Label','Churn Category','Churn Reason']
 )
-# if colunas_exibir:
-#     st.table(df_filtrado[colunas_exibir].head(50))
-# else:
-#     st.warning('Selecione ao menos uma coluna.')
 
 # st.caption(f'Exibindo até 50 de {total} registros filtrados.')
 if colunas_exibir:
