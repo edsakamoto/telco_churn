@@ -88,7 +88,7 @@ internet_opts = st.sidebar.multiselect(
 )
 
 tenure_range = st.sidebar.slider(
-    'Tempo de Relacionamento com Cliente (meses)'
+    'Tempo de Contrato (meses)'
     ,int(df['Tenure in Months'].min()),int(df['Tenure in Months'].max())
     ,(int(df['Tenure in Months'].min()),int(df['Tenure in Months'].max()))
 )
@@ -100,7 +100,7 @@ df_f = df[
 ]
 
 if df_f.empty:
-    st.warning('Nnehum registro corresponde aos filtros selecionados.')
+    st.warning('Nenhum registro corresponde aos filtros selecionados.')
     st.stop()
 
 #kpis
@@ -163,7 +163,7 @@ with c3:
     fig_p = px.histogram(
         df_f,x='Tenure in Months',color='Churn Label'
         ,barmode='overlay',nbins=30, opacity=0.65
-        ,title='Distribuição de Relacionamento com Cliente: Churn x Não Churn'
+        ,title='Distribuição do tempo de contrato (tenure): Churn x Não Churn'
         ,color_discrete_map=COLOR_MAP
     )
 
@@ -179,7 +179,7 @@ with c3:
         ax.legend()
         return fig
     
-    save_and_show(fig_p,build_mpl_tenure,'03_rel_cliente_distribuicao.png',key='fig_rel_cliente')
+    save_and_show(fig_p,build_mpl_tenure,'03_distrib_tempo_contrato.png',key='fig_rel_cliente')
 
 with c4:
     fig_p = px.box(
@@ -319,7 +319,7 @@ def build_mpl_cltv():
     ax.set_ylabel('CLTV')
     ax.set_title('CLTV x Churn Score (tamanho = Cobrança Mensal)')
     ax.legend(title='Churn')
-    
+
     return fig
 
 save_and_show(fig_p,build_mpl_cltv,'09_cltv_x_churn_score.png',key='fig_cltv')
