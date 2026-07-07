@@ -57,7 +57,7 @@ def gerar_relatorio(nome_usuario: str) -> str:
         '=' * 70,
         '  TELCO CHURN DASHBOARD - RELATÓRIO ANALÍTICO COMPLETO  ',
         '=' * 70,
-        f' Gerado por   : {nome_usuario if nome_usuario else 'Usuário'} ',
+        f' Gerado por   : {nome_usuario if nome_usuario else 'Anônimo'} ',
         f' Data/Hora    : {agora} ',
         f' Dataset      : IBM Telco Customer Churn ',
         '=' * 70,
@@ -302,7 +302,7 @@ with tab_email:
                         servidor.sendmail(remetente,destinatario,msg.as_string())
                     
                     st.success(f'Email enviado com sucesso para **{destinatario}**!')
-                    st.balloons()
+                    st.info(':warning: O email pode chegar na sua caixa de SPAM. Caso não encontre na sua caixa de entrada, verifique o SPAM !')                    
 
                 except smtplib.SMTPAuthenticationError:
                     st.error(
